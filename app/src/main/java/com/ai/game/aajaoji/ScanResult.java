@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ai.game.aajaoji.StudentRoom.Student;
 import com.ai.game.aajaoji.StudentRoom.StudentViewModel;
@@ -24,7 +25,10 @@ public class ScanResult extends AppCompatActivity {
         String result = getIntent().getStringExtra("Result");
         Student student = studentViewModel.getStudent(result);
 
-        ((TextView)findViewById(R.id.textView)).setText(student.name);
+        if(student != null)
+            ((TextView)findViewById(R.id.textView)).setText(student.name);
+        else
+            Toast.makeText(this, "Student = null", Toast.LENGTH_LONG).show();
     }
 
 
