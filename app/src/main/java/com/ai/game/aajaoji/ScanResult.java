@@ -19,7 +19,7 @@ public class ScanResult extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        Intent intent = new Intent(getApplicationContext(), ScanActivity.class);
         startActivity(intent);
     }
 }

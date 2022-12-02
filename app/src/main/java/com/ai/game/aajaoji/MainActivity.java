@@ -1,87 +1,98 @@
 package com.ai.game.aajaoji;
 
-import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.ViewModelProvider;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.preference.PreferenceManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
-import com.budiyev.android.codescanner.CodeScanner;
-import com.budiyev.android.codescanner.CodeScannerView;
-import com.budiyev.android.codescanner.DecodeCallback;
-import com.budiyev.android.codescanner.ScanMode;
-import com.google.zxing.Result;
+import com.ai.game.aajaoji.StudentRoom.Student;
+import com.ai.game.aajaoji.StudentRoom.StudentViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
-    private CodeScanner scanner;
+	EditText EThash;
+	Button Bsearch;
+	TextView name, email, roll;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+	StudentViewModel studentViewModel;
 
-        int allPermissions = 1;
-        String Permissions[] = {
-                Manifest.permission.CAMERA
-        };
+	int desk_no;
+	SharedPreferences sharedPreferences;
+	ActionBar actionBar;
 
-        if(!hasPermissions(this, Permissions)){
-            ActivityCompat.requestPermissions(this, Permissions, allPermissions);
-        }
-        else{
-            runCodeScanner();
-            // testing
-        }
-    }
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
 
-    public void runCodeScanner() {
-        scanner = new CodeScanner(this, findViewById(R.id.scanner_view));
-        scanner.setAutoFocusEnabled(true);
-        scanner.setFormats(CodeScanner.ALL_FORMATS);
-        scanner.setScanMode(ScanMode.CONTINUOUS);
+		studentViewModel = new ViewModelProvider(this).get(StudentViewModel.class);
 
-        scanner.setDecodeCallback(new DecodeCallback() {
-            @Override
-            public void onDecoded(@NonNull final Result result) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-//                        Toast.makeText(MainActivity.this, result.getText(), Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getApplicationContext(), ScanResult.class);
-                        intent.putExtra("Result", result.getText());
-                        startActivity(intent);
-                    }
-                });
-            }
-        });
-    }
+		Bsearch=findViewById(R.id.BSearch);
+		EThash=findViewById(R.id.ETHashString);
+		name=findViewById(R.id.TVName);
+		email=findViewById(R.id.TVEmail);
+		roll=findViewById(R.id.TVRoll);
+		actionBar=getSupportActionBar();
 
-    public static boolean hasPermissions(Context context, String... permissions){
-        if(context != null && permissions != null){
-            for (String permission : permissions){
-                if(ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED){
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
+		sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+		desk_no = sharedPreferences.getInt("desk_no", -1);
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        scanner.startPreview();
-    }
+		if(desk_no == -1)
+		{
+			Intent intent = new Intent(this, DeskActivity.class);
 
-    @Override
-    public void onPause() {
-        scanner.releaseResources();
-        super.onPause();
-    }
+			startActivity(intent);
+			finish();
+		}
+		else
+		{
+			desk_no=sharedPreferences.getInt("desk_no", -1);
+			actionBar.setTitle("Desk No "+desk_no);
+
+			Intent intent=new Intent(this, ScanActivity.class);
+			startActivity(intent);
+			finish();
+		}
+
+
+
+//		Bsearch.setOnClickListener(v -> {
+//			String hash=EThash.getText().toString();
+//
+//			Student student = studentViewModel.getStudent(hash);
+//			EThash.setText("");
+//
+//			if(student != null)
+//			{
+//				if(student.isValid)
+//				{
+//					name.setText(student.name);
+//					email.setText(student.email);
+//					roll.setText(""+student.roll);
+//
+//					student.isValid=false;
+//					studentViewModel.Update(student);
+//				}
+//				else
+//				{
+//					name.setText("Student ID already used");
+//					email.setText("");
+//					roll.setText("");
+//				}
+//			}
+//			else
+//			{
+//				name.setText("Student Does Not Exist");
+//				email.setText("");
+//				roll.setText("");
+//			}
+//		});
+	}
 }
