@@ -19,8 +19,6 @@ public class ScanActivity extends AppCompatActivity {
 
     private CodeScanner scanner;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
