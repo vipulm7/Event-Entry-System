@@ -50,8 +50,8 @@ public abstract class StudentDatabase extends RoomDatabase {
 		@Override
 		protected Void doInBackground(Void... voids)
 		{
-			studentDAO.Insert(new Student(20001003137L, "Vipul Mittal", "20001003137@jcboseust.ac.in", "abcd", 1));
-			studentDAO.Insert(new Student(20001003109L, "Sameer", "20001003109@jcboseust.ac.in", "abcde", 2));
+			studentDAO.Insert(new Student(20001003137L, "Vipul Mittal", "20001003137@jcboseust.ac.in", "8b48f467e195988ed7ccbd41b539332edea9a50127a3ef1bf5b279d9b2c8bf5", 1));
+			studentDAO.Insert(new Student(20001003109L, "Sameer", "20001003109@jcboseust.ac.in", "b34c91756c79700ecf8bcc1582c56966bf4df79ae8fbe32787bd988917087bd", 2));
 
 			return null;
 		}
