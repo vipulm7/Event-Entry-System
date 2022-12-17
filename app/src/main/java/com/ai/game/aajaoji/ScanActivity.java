@@ -1,5 +1,7 @@
 package com.ai.game.aajaoji;
 
+import static android.app.PendingIntent.getActivity;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -34,8 +36,8 @@ public class ScanActivity extends AppCompatActivity {
         }
         else{
             runCodeScanner();
-            // testing
         }
+
     }
 
     public void runCodeScanner() {
@@ -54,6 +56,7 @@ public class ScanActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), ScanResult.class);
                         intent.putExtra("Result", result.getText());
                         startActivity(intent);
+                        finish();
                     }
                 });
             }
@@ -81,5 +84,11 @@ public class ScanActivity extends AppCompatActivity {
     public void onPause() {
         scanner.releaseResources();
         super.onPause();
+    }
+
+    @Override
+    public void onBackPressed() {
+        finishAffinity();
+        System.exit(0);
     }
 }

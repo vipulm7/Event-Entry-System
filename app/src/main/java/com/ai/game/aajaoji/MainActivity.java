@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -28,17 +29,12 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-	EditText EThash;
-	Button Bsearch;
-	TextView name, email, roll;
-
 	StudentViewModel studentViewModel;
 
 	SharedPreferences sharedPreferences;
-	ActionBar actionBar;
 	boolean first_time;
 
-	String TAG = "VipulTag";
+	String TAG = "TestTAG";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +42,6 @@ public class MainActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_main);
 
 		studentViewModel = new ViewModelProvider(this).get(StudentViewModel.class);
-
-		Bsearch = findViewById(R.id.BSearch);
-		EThash = findViewById(R.id.ETHashString);
-		name = findViewById(R.id.TVName);
-		email = findViewById(R.id.TVEmail);
-		roll = findViewById(R.id.TVRoll);
-		actionBar = getSupportActionBar();
 
 //		sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 		sharedPreferences = this.getSharedPreferences("com.manan.eventLogin", Context.MODE_PRIVATE);
@@ -83,15 +72,31 @@ public class MainActivity extends AppCompatActivity {
 				Log.d(TAG, "onCreate: catch came");
 				e.printStackTrace();
 			}
+			AsyncTask.execute(new Runnable() {
+				@Override
+				public void run() {
+					try{
+						JSONObject object = new JSONObject(loadJSONFromAsset());
+						JSONArray array = object.getJSONArray("users");
 
-//			Intent intent = new Intent(this, DeskActivity.class);
-//			startActivity(intent);
-//			finish();
+						if(studentViewModel.getAllStudents().size() == array.length()){
+							Intent intent=new Intent(getApplicationContext(), ScanActivity.class);
+							startActivity(intent);
+							finish();
+						}
+					}
+					catch (JSONException e){
+						e.printStackTrace();
+					}
+
+				}
+			});
 		}
-
-		Intent intent=new Intent(this, ScanActivity.class);
-		startActivity(intent);
-		finish();
+		else{
+			Intent intent=new Intent(getApplicationContext(), ScanActivity.class);
+			startActivity(intent);
+			finish();
+		}
 	}
 
 	public String loadJSONFromAsset()

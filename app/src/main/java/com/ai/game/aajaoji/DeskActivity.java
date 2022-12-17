@@ -61,10 +61,7 @@ public class DeskActivity extends AppCompatActivity {
 				startActivity(intent);
 				finish();
 			}
-			else
-			{
-				//gaand mrao
-			}
+
 
 		});
 	}

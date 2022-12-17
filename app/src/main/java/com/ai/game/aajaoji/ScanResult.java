@@ -3,6 +3,7 @@ package com.ai.game.aajaoji;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +28,8 @@ public class ScanResult extends AppCompatActivity {
 
         studentViewModel = new ViewModelProvider(this).get(StudentViewModel.class);
 
+        Log.i("aasdasdasdsda", Long.toString(studentViewModel.getAllStudents().size()));
+
         tvEmail = findViewById(R.id.TVEmail);
         tvName = findViewById(R.id.TVName);
         tvRoll = findViewById(R.id.TVRoll);
@@ -37,6 +40,10 @@ public class ScanResult extends AppCompatActivity {
         String result = getIntent().getStringExtra("Result");   // Result --> Hash Value
         student = studentViewModel.getStudent(result);
 
+
+//        for(Student a : studentViewModel.getAllStudents()){
+//            Log.i("masdas", a.sr_no + a.name);
+//        }
         if(student != null)
             Log.d("TAG", "onCreate: true/false = "+student.isValid);
 
@@ -72,12 +79,22 @@ public class ScanResult extends AppCompatActivity {
         bConfirm.setOnClickListener(v->{
             student.isValid = false;
             studentViewModel.Update(student);
+            Intent intent = new Intent(getApplicationContext(), ScanActivity.class);
+            startActivity(intent);
 
-            onBackPressed();
+            finish();
         });
 
         bCancel.setOnClickListener(v->{
-            onBackPressed();
+            Intent intent = new Intent(getApplicationContext(), ScanActivity.class);
+            startActivity(intent);
+
+            finish();
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
     }
 }
