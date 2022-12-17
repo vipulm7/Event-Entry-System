@@ -15,8 +15,6 @@ public class Student
 	public String hashed;
 	public boolean isValid;
 
-	public int deskNo;
-
 	public Student(String roll, String name, String email, String hashed, long sr_no)
 	{
 		this.roll = roll;
@@ -25,7 +23,5 @@ public class Student
 		this.hashed = hashed;
 		isValid = true;
 		this.sr_no=sr_no;
-
-		deskNo=(int)(sr_no%5);
 	}
 }

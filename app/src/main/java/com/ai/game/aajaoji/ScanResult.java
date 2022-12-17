@@ -62,10 +62,10 @@ public class ScanResult extends AppCompatActivity {
         else
         {
             tvName.setText("Student not found!!");
-            tvEmail.setText("Wrong Desk!!");
 
             tvAlreadyPresent.setVisibility(View.INVISIBLE);
             tvRoll.setVisibility(View.INVISIBLE);
+            tvEmail.setVisibility(View.INVISIBLE);
             bConfirm.setEnabled(false);
         }
 

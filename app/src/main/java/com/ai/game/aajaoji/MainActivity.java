@@ -33,11 +33,9 @@ public class MainActivity extends AppCompatActivity {
 
 	StudentViewModel studentViewModel;
 
-	int desk_no;
 	SharedPreferences sharedPreferences;
 	ActionBar actionBar;
-
-	ArrayList<String> students = new ArrayList<>();
+	boolean first_time;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,38 +44,24 @@ public class MainActivity extends AppCompatActivity {
 
 		studentViewModel = new ViewModelProvider(this).get(StudentViewModel.class);
 
-		Bsearch=findViewById(R.id.BSearch);
-		EThash=findViewById(R.id.ETHashString);
-		name=findViewById(R.id.TVName);
-		email=findViewById(R.id.TVEmail);
-		roll=findViewById(R.id.TVRoll);
-		actionBar=getSupportActionBar();
-
-//		try {
-//			JSONObject object = new JSONObject(loadJSONFromAsset());
-//			JSONArray array = object.getJSONArray("users");
-//			for(int i=-1;++i<array.length();)
-//			{
-//				JSONObject studentData = array.getJSONObject(i);
-//				String student = studentData.getString("name");
-//				students.add(student);
-//			}
-//		} catch (JSONException e) {
-//			e.printStackTrace();
-//		}
-
-//		for(int i=-1;++i<students.size();)
-//		{
-//			Log.d("TAG", "onCreate: "+students.get(i));
-//		}
+		Bsearch = findViewById(R.id.BSearch);
+		EThash = findViewById(R.id.ETHashString);
+		name = findViewById(R.id.TVName);
+		email = findViewById(R.id.TVEmail);
+		roll = findViewById(R.id.TVRoll);
+		actionBar = getSupportActionBar();
 
 		sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-		desk_no = sharedPreferences.getInt("desk_no", -1);
+		first_time = sharedPreferences.getBoolean("first_time", true);
 
-		Log.d("TAGvipul", "onCreate: "+desk_no);
+		Log.d("TAGvipul", "onCreate: "+first_time);
 
-		if(desk_no == -1)
+		if(first_time)
 		{
+			SharedPreferences.Editor editor = sharedPreferences.edit();
+			editor.putBoolean("first_time", false);
+			editor.apply();
+
 			try {
 				JSONObject object = new JSONObject(loadJSONFromAsset());
 				JSONArray array = object.getJSONArray("users");
@@ -90,57 +74,19 @@ public class MainActivity extends AppCompatActivity {
 					studentViewModel.Insert(student);
 				}
 			} catch (JSONException e) {
+				Log.d("TAGvipul", "onCreate: catch came");
 				e.printStackTrace();
 			}
 
-			Intent intent = new Intent(this, DeskActivity.class);
-
-			startActivity(intent);
-			finish();
-		}
-		else
-		{
-			desk_no=sharedPreferences.getInt("desk_no", -1);
-			actionBar.setTitle("Desk No "+desk_no);
-
-			Intent intent=new Intent(this, ScanActivity.class);
-			startActivity(intent);
-			finish();
+//			Intent intent = new Intent(this, DeskActivity.class);
+//
+//			startActivity(intent);
+//			finish();
 		}
 
-
-
-//		Bsearch.setOnClickListener(v -> {
-//			String hash=EThash.getText().toString();
-//
-//			Student student = studentViewModel.getStudent(hash);
-//			EThash.setText("");
-//
-//			if(student != null)
-//			{
-//				if(student.isValid)
-//				{
-//					name.setText(student.name);
-//					email.setText(student.email);
-//					roll.setText(""+student.roll);
-//
-//					student.isValid=false;
-//					studentViewModel.Update(student);
-//				}
-//				else
-//				{
-//					name.setText("Student ID already used");
-//					email.setText("");
-//					roll.setText("");
-//				}
-//			}
-//			else
-//			{
-//				name.setText("Student Does Not Exist");
-//				email.setText("");
-//				roll.setText("");
-//			}
-//		});
+		Intent intent=new Intent(this, ScanActivity.class);
+		startActivity(intent);
+		finish();
 	}
 
 	public String loadJSONFromAsset()
