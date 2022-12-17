@@ -4,6 +4,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
 	ActionBar actionBar;
 	boolean first_time;
 
+	String TAG = "VipulTag";
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -51,10 +54,11 @@ public class MainActivity extends AppCompatActivity {
 		roll = findViewById(R.id.TVRoll);
 		actionBar = getSupportActionBar();
 
-		sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+//		sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+		sharedPreferences = this.getSharedPreferences("com.manan.eventLogin", Context.MODE_PRIVATE);
 		first_time = sharedPreferences.getBoolean("first_time", true);
 
-		Log.d("TAGvipul", "onCreate: "+first_time);
+		Log.d(TAG, "onCreate: "+first_time);
 
 		if(first_time)
 		{
@@ -65,21 +69,22 @@ public class MainActivity extends AppCompatActivity {
 			try {
 				JSONObject object = new JSONObject(loadJSONFromAsset());
 				JSONArray array = object.getJSONArray("users");
-				for(int i=-1;++i<array.length();)
-				{
+				int i=-1;
+				while (++i<array.length()) {
 					JSONObject studentData = array.getJSONObject(i);
 					Student student = new Student(studentData.getString("Roll"), studentData.getString("Name"), studentData.getString("Email"), studentData.getString("Hash"), i+1);
 
-					Log.d("TAG", "onCreate: "+student.name);
+//					Log.d(TAG, "onCreate: "+student.name);
 					studentViewModel.Insert(student);
 				}
+				Log.d(TAG, "onCreate: i = "+i);
+
 			} catch (JSONException e) {
-				Log.d("TAGvipul", "onCreate: catch came");
+				Log.d(TAG, "onCreate: catch came");
 				e.printStackTrace();
 			}
 
 //			Intent intent = new Intent(this, DeskActivity.class);
-//
 //			startActivity(intent);
 //			finish();
 		}

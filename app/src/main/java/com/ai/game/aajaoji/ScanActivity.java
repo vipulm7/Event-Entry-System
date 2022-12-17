@@ -25,7 +25,7 @@ public class ScanActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scan);
 
         int allPermissions = 1;
-        String Permissions[] = {
+        String[] Permissions = {
                 Manifest.permission.CAMERA
         };
 
