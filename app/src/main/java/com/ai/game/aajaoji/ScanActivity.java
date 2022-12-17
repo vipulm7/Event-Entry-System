@@ -50,7 +50,7 @@ public class ScanActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-//                      Toast.makeText(MainActivity.this, result.getText(), Toast.LENGTH_SHORT).show();
+//                      Result --> Hash Value
                         Intent intent = new Intent(getApplicationContext(), ScanResult.class);
                         intent.putExtra("Result", result.getText());
                         startActivity(intent);

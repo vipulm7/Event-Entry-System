@@ -8,12 +8,22 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ai.game.aajaoji.StudentRoom.Student;
 import com.ai.game.aajaoji.StudentRoom.StudentViewModel;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
 	int desk_no;
 	SharedPreferences sharedPreferences;
 	ActionBar actionBar;
+
+	ArrayList<String> students = new ArrayList<>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +52,24 @@ public class MainActivity extends AppCompatActivity {
 		email=findViewById(R.id.TVEmail);
 		roll=findViewById(R.id.TVRoll);
 		actionBar=getSupportActionBar();
+
+		try {
+			JSONObject object = new JSONObject(loadJSONFromAsset());
+			JSONArray array = object.getJSONArray("users");
+			for(int i=-1;++i<array.length();)
+			{
+				JSONObject studentData = array.getJSONObject(i);
+				String student = studentData.getString("name");
+				students.add(student);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		for(int i=-1;++i<students.size();)
+		{
+			Log.d("TAG", "onCreate: "+students.get(i));
+		}
 
 		sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 		desk_no = sharedPreferences.getInt("desk_no", -1);
@@ -94,5 +124,23 @@ public class MainActivity extends AppCompatActivity {
 //				roll.setText("");
 //			}
 //		});
+	}
+
+	public String loadJSONFromAsset()
+	{
+		String json = null;
+		try {
+			InputStream inputStream = getAssets().open("example_1.json");
+			int size = inputStream.available();
+			byte[] buffer = new byte[size];
+			inputStream.read(buffer);
+			inputStream.close();
+			json = new String(buffer, StandardCharsets.UTF_8);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return json;
 	}
 }
