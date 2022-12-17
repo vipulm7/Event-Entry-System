@@ -53,29 +53,46 @@ public class MainActivity extends AppCompatActivity {
 		roll=findViewById(R.id.TVRoll);
 		actionBar=getSupportActionBar();
 
-		try {
-			JSONObject object = new JSONObject(loadJSONFromAsset());
-			JSONArray array = object.getJSONArray("users");
-			for(int i=-1;++i<array.length();)
-			{
-				JSONObject studentData = array.getJSONObject(i);
-				String student = studentData.getString("name");
-				students.add(student);
-			}
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			JSONObject object = new JSONObject(loadJSONFromAsset());
+//			JSONArray array = object.getJSONArray("users");
+//			for(int i=-1;++i<array.length();)
+//			{
+//				JSONObject studentData = array.getJSONObject(i);
+//				String student = studentData.getString("name");
+//				students.add(student);
+//			}
+//		} catch (JSONException e) {
+//			e.printStackTrace();
+//		}
 
-		for(int i=-1;++i<students.size();)
-		{
-			Log.d("TAG", "onCreate: "+students.get(i));
-		}
+//		for(int i=-1;++i<students.size();)
+//		{
+//			Log.d("TAG", "onCreate: "+students.get(i));
+//		}
 
 		sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 		desk_no = sharedPreferences.getInt("desk_no", -1);
 
+		Log.d("TAGvipul", "onCreate: "+desk_no);
+
 		if(desk_no == -1)
 		{
+			try {
+				JSONObject object = new JSONObject(loadJSONFromAsset());
+				JSONArray array = object.getJSONArray("users");
+				for(int i=-1;++i<array.length();)
+				{
+					JSONObject studentData = array.getJSONObject(i);
+					Student student = new Student(studentData.getString("Roll"), studentData.getString("Name"), studentData.getString("Email"), studentData.getString("Hash"), i+1);
+
+					Log.d("TAG", "onCreate: "+student.name);
+					studentViewModel.Insert(student);
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
 			Intent intent = new Intent(this, DeskActivity.class);
 
 			startActivity(intent);
@@ -130,7 +147,8 @@ public class MainActivity extends AppCompatActivity {
 	{
 		String json = null;
 		try {
-			InputStream inputStream = getAssets().open("example_1.json");
+			InputStream inputStream = getAssets().open("first_year.json");
+			getAssets();
 			int size = inputStream.available();
 			byte[] buffer = new byte[size];
 			inputStream.read(buffer);

@@ -7,9 +7,9 @@ import androidx.room.PrimaryKey;
 public class Student
 {
 	@PrimaryKey
-	public long roll;
-
 	public long sr_no;
+
+	public String roll;
 	public String name;
 	public String email;
 	public String hashed;
@@ -17,7 +17,7 @@ public class Student
 
 	public int deskNo;
 
-	public Student(long roll, String name, String email, String hashed, long sr_no)
+	public Student(String roll, String name, String email, String hashed, long sr_no)
 	{
 		this.roll = roll;
 		this.name = name;

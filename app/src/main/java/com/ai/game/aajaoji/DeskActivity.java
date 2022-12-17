@@ -43,14 +43,14 @@ public class DeskActivity extends AppCompatActivity {
 				int givenDeskNo=Integer.parseInt(etdesk.getText().toString());
 
 				List<Student> students=studentViewModel.getAllStudents();
-				for(int i=-1;++i<students.size();)
-				{
-					if(students.get(i).deskNo!=givenDeskNo)
-					{
-						studentViewModel.Delete(students.get(i));
-						Toast.makeText(this, "removed "+students.get(i).sr_no, Toast.LENGTH_LONG).show();
-					}
-				}
+//				for(int i=-1;++i<students.size();)
+//				{
+//					if(students.get(i).deskNo!=givenDeskNo)
+//					{
+//						studentViewModel.Delete(students.get(i));
+////						Toast.makeText(this, "removed "+students.get(i).sr_no, Toast.LENGTH_LONG).show();
+//					}
+//				}
 
 				SharedPreferences.Editor editor = sharedPreferences.edit();
 				editor.putInt("desk_no", givenDeskNo);

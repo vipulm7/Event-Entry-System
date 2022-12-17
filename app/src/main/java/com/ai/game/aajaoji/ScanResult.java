@@ -42,7 +42,7 @@ public class ScanResult extends AppCompatActivity {
 
         if(student != null && student.isValid){
             tvEmail.setText(student.email);
-            tvRoll.setText(Long.toString(student.roll));
+            tvRoll.setText(student.roll);
             tvName.setText(student.name);
 
             tvAlreadyPresent.setVisibility(View.INVISIBLE);
@@ -52,7 +52,7 @@ public class ScanResult extends AppCompatActivity {
         else if(student != null)
         {
             tvEmail.setText(student.email);
-            tvRoll.setText(Long.toString(student.roll));
+            tvRoll.setText(student.roll);
             tvName.setText(student.name);
 
             tvAlreadyPresent.setVisibility(View.VISIBLE);
