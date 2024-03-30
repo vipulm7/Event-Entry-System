@@ -16,28 +16,23 @@ public class StudentViewModel extends AndroidViewModel {
 		repo = new StudentRepo(application);
 	}
 
-	public void Insert(Student student)
-	{
+	public void Insert(Student student) {
 		repo.Insert(student);
 	}
 
-	public void Delete(Student student)
-	{
+	public void Delete(Student student) {
 		repo.Delete(student);
 	}
 
-	public void Update(Student student)
-	{
+	public void Update(Student student) {
 		repo.Update(student);
 	}
 
-	public Student getStudent(String studentHash)
-	{
+	public Student getStudent(String studentHash) {
 		return repo.getStudent(studentHash);
 	}
 
-	public List<Student> getAllStudents()
-	{
+	public List<Student> getAllStudents() {
 		return repo.getAllStudents();
 	}
 

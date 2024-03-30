@@ -9,8 +9,7 @@ import androidx.room.Update;
 import java.util.List;
 
 @Dao
-public interface StudentDAO
-{
+public interface StudentDAO {
 	@Insert
 	void Insert(Student student);
 

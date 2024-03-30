@@ -1,81 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ScanResult">
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	tools:context=".ScanResult">
 
-    <Button
-        android:id="@+id/BCancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cancel"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/BConfirm"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TVAlreadyPresent"
-        app:layout_constraintVertical_bias="0.19" />
+	<Button
+		android:id="@+id/BCancel"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="Cancel"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toStartOf="@+id/BConfirm"
+		app:layout_constraintHorizontal_bias="0.5"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/TVAlreadyPresent"
+		app:layout_constraintVertical_bias="0.19" />
 
-    <Button
-        android:id="@+id/BConfirm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Confirm"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/BCancel"
-        app:layout_constraintTop_toBottomOf="@+id/TVAlreadyPresent"
-        app:layout_constraintVertical_bias="0.19" />
+	<Button
+		android:id="@+id/BConfirm"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="Confirm"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="0.5"
+		app:layout_constraintStart_toEndOf="@+id/BCancel"
+		app:layout_constraintTop_toBottomOf="@+id/TVAlreadyPresent"
+		app:layout_constraintVertical_bias="0.19" />
 
-    <TextView
-        android:id="@+id/TVName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:text="TextView"
-        android:gravity="center"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+	<TextView
+		android:id="@+id/TVName"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="100dp"
+		android:gravity="center"
+		android:text="TextView"
+		android:textSize="24sp"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/TVEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:gravity="center"
-        android:text="TextView"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TVName" />
+	<TextView
+		android:id="@+id/TVEmail"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="50dp"
+		android:gravity="center"
+		android:text="TextView"
+		android:textSize="24sp"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/TVName" />
 
-    <TextView
-        android:id="@+id/TVRoll"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:textSize="24sp"
-        app:layout_constraintTop_toBottomOf="@+id/TVEmail"
-        android:layout_marginTop="50dp"
-        />
+	<TextView
+		android:id="@+id/TVRoll"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="50dp"
+		android:gravity="center"
+		android:text="TextView"
+		android:textSize="24sp"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/TVEmail" />
 
-    <TextView
-        android:id="@+id/TVAlreadyPresent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Student Already Present!!"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/TVRoll"
-        android:layout_marginTop="50dp"
-        android:textSize="24sp"/>
+	<TextView
+		android:id="@+id/TVAlreadyPresent"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="50dp"
+		android:gravity="center"
+		android:text="Student Already Present!!"
+		android:textSize="24sp"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/TVRoll" />
 </androidx.constraintlayout.widget.ConstraintLayout>

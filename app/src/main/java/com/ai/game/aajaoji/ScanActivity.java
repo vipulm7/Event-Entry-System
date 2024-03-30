@@ -1,16 +1,14 @@
 package com.ai.game.aajaoji;
 
-import static android.app.PendingIntent.getActivity;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.DecodeCallback;
@@ -19,76 +17,75 @@ import com.google.zxing.Result;
 
 public class ScanActivity extends AppCompatActivity {
 
-    private CodeScanner scanner;
+	private CodeScanner scanner;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scan);
+	public static boolean hasPermissions(Context context, String... permissions) {
+		if (context != null && permissions != null) {
+			for (String permission : permissions) {
+				if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
 
-        int allPermissions = 1;
-        String[] Permissions = {
-                Manifest.permission.CAMERA
-        };
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_scan);
 
-        if(!hasPermissions(this, Permissions)){
-            ActivityCompat.requestPermissions(this, Permissions, allPermissions);
-        }
-        else{
-            runCodeScanner();
-        }
+		int allPermissions = 1;
+		String[] Permissions = {
+				Manifest.permission.CAMERA
+		};
 
-    }
+		if (!hasPermissions(this, Permissions)) {
+			ActivityCompat.requestPermissions(this, Permissions, allPermissions);
+		} else {
+			runCodeScanner();
+		}
 
-    public void runCodeScanner() {
-        scanner = new CodeScanner(this, findViewById(R.id.scanner_view));
-        scanner.setAutoFocusEnabled(true);
-        scanner.setFormats(CodeScanner.ALL_FORMATS);
-        scanner.setScanMode(ScanMode.CONTINUOUS);
+	}
 
-        scanner.setDecodeCallback(new DecodeCallback() {
-            @Override
-            public void onDecoded(@NonNull final Result result) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
+	public void runCodeScanner() {
+		scanner = new CodeScanner(this, findViewById(R.id.scanner_view));
+		scanner.setAutoFocusEnabled(true);
+		scanner.setFormats(CodeScanner.ALL_FORMATS);
+		scanner.setScanMode(ScanMode.CONTINUOUS);
+
+		scanner.setDecodeCallback(new DecodeCallback() {
+			@Override
+			public void onDecoded(@NonNull final Result result) {
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
 //                      Result --> Hash Value
-                        Intent intent = new Intent(getApplicationContext(), ScanResult.class);
-                        intent.putExtra("Result", result.getText());
-                        startActivity(intent);
-                        finish();
-                    }
-                });
-            }
-        });
-    }
+						Intent intent = new Intent(getApplicationContext(), ScanResult.class);
+						intent.putExtra("Result", result.getText());
+						startActivity(intent);
+						finish();
+					}
+				});
+			}
+		});
+	}
 
-    public static boolean hasPermissions(Context context, String... permissions){
-        if(context != null && permissions != null){
-            for (String permission : permissions){
-                if(ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED){
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
+	@Override
+	public void onResume() {
+		super.onResume();
+		scanner.startPreview();
+	}
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        scanner.startPreview();
-    }
+	@Override
+	public void onPause() {
+		scanner.releaseResources();
+		super.onPause();
+	}
 
-    @Override
-    public void onPause() {
-        scanner.releaseResources();
-        super.onPause();
-    }
-
-    @Override
-    public void onBackPressed() {
-        finishAffinity();
-        System.exit(0);
-    }
+	@Override
+	public void onBackPressed() {
+		finishAffinity();
+		System.exit(0);
+	}
 }

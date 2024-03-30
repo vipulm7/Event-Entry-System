@@ -1,19 +1,14 @@
 package com.ai.game.aajaoji;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.ai.game.aajaoji.StudentRoom.Student;
 import com.ai.game.aajaoji.StudentRoom.StudentViewModel;
@@ -25,7 +20,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,10 +41,9 @@ public class MainActivity extends AppCompatActivity {
 		sharedPreferences = this.getSharedPreferences("com.manan.eventLogin", Context.MODE_PRIVATE);
 		first_time = sharedPreferences.getBoolean("first_time", true);
 
-		Log.d(TAG, "onCreate: "+first_time);
+		Log.d(TAG, "onCreate: " + first_time);
 
-		if(first_time)
-		{
+		if (first_time) {
 			SharedPreferences.Editor editor = sharedPreferences.edit();
 			editor.putBoolean("first_time", false);
 			editor.apply();
@@ -58,15 +51,15 @@ public class MainActivity extends AppCompatActivity {
 			try {
 				JSONObject object = new JSONObject(loadJSONFromAsset());
 				JSONArray array = object.getJSONArray("users");
-				int i=-1;
-				while (++i<array.length()) {
+				int i = -1;
+				while (++i < array.length()) {
 					JSONObject studentData = array.getJSONObject(i);
-					Student student = new Student(studentData.getString("Roll"), studentData.getString("Name"), studentData.getString("Email"), studentData.getString("Hash"), i+1);
+					Student student = new Student(studentData.getString("Roll"), studentData.getString("Name"), studentData.getString("Email"), studentData.getString("Hash"), i + 1);
 
 //					Log.d(TAG, "onCreate: "+student.name);
 					studentViewModel.Insert(student);
 				}
-				Log.d(TAG, "onCreate: i = "+i);
+				Log.d(TAG, "onCreate: i = " + i);
 
 			} catch (JSONException e) {
 				Log.d(TAG, "onCreate: catch came");
@@ -75,32 +68,29 @@ public class MainActivity extends AppCompatActivity {
 			AsyncTask.execute(new Runnable() {
 				@Override
 				public void run() {
-					try{
+					try {
 						JSONObject object = new JSONObject(loadJSONFromAsset());
 						JSONArray array = object.getJSONArray("users");
 
-						if(studentViewModel.getAllStudents().size() == array.length()){
-							Intent intent=new Intent(getApplicationContext(), ScanActivity.class);
+						if (studentViewModel.getAllStudents().size() == array.length()) {
+							Intent intent = new Intent(getApplicationContext(), ScanActivity.class);
 							startActivity(intent);
 							finish();
 						}
-					}
-					catch (JSONException e){
+					} catch (JSONException e) {
 						e.printStackTrace();
 					}
 
 				}
 			});
-		}
-		else{
-			Intent intent=new Intent(getApplicationContext(), ScanActivity.class);
+		} else {
+			Intent intent = new Intent(getApplicationContext(), ScanActivity.class);
 			startActivity(intent);
 			finish();
 		}
 	}
 
-	public String loadJSONFromAsset()
-	{
+	public String loadJSONFromAsset() {
 		String json = null;
 		try {
 			InputStream inputStream = getAssets().open("first_year.json");
